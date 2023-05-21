@@ -10,7 +10,9 @@
 
 ## 4.模块说明
 1. <b>sentinel-flow</b> : 限流模块测试
-2. 
+2. <b>sentinel-feign</b> : feign的集成测试
+3. <b>sentinel-gateway</b> : 网关的集成测试
+4. <b>sentinel-nacos-datasource</b> : sentinel配置的持久化
 ## 5.参考文档
 1. [参考文档1](https://developer.aliyun.com/article/878296)
 

@@ -9,6 +9,9 @@
 
     <modules>
         <module>sentinel-flow</module>
+        <module>sentinel-feign</module>
+        <module>sentinel-gateway</module>
+        <module>sentinel-nacos-datasource</module>
     </modules>
 
     <name>nacos-sentinel-demo</name>
