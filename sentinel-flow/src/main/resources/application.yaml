@@ -21,8 +21,6 @@ spring:
       transport:
          port: 8719 #默认是8719
         #dashboard: http://sentinel.hacketown.com  #sentinel dashboard 的服务器地址和端口
-         dashboard: 47.96.111.179:8888
+         dashboard: localhost:8080  #确保sentinel控制台和资源访问处于同一个网络中，方便测试我就在本地运行。端口默认是8080，可以在部署时手动指定端口运行
       log:
         dir: /Users/qiuguan/logs/sentinel/
-#      filter:
-#        url-patterns: /**
