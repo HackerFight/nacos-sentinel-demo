@@ -18,7 +18,7 @@
 
 ## 6.其他
 1. 项目开始只有一个父工程，后面我将父工程的代码结构(src)直接复制到了新的模块[sentinel-flow]中，运行主配置类时报错，找不到主配置类，此时可以重新编译一下
-![img.png](img.png)
+![img.png](sentinel-flow/src/main/resources/img/img.png)
 
 2. sentinel不显示资源 <br>
 如图![](sentinel-flow/src/main/resources/img/img_1.png)
