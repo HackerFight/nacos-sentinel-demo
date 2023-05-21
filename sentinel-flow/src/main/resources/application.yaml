@@ -24,3 +24,5 @@ spring:
          dashboard: 47.96.111.179:8888
       log:
         dir: /Users/qiuguan/logs/sentinel/
+#      filter:
+#        url-patterns: /**

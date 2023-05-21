@@ -91,6 +91,14 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
+                <!--如果不添加该配置，子模块打包再服务器上部署的时候提示：无主属性清单-->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
                     <excludes>
                         <!--排除一些开发工具，减小打包后的体积-->
