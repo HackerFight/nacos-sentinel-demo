@@ -4,19 +4,24 @@
 ## 2. sentinel 控制台
 [参考官方文档说明](https://sentinelguard.io/zh-cn/docs/dashboard.html)
 
-## 3.nacos 2.x 版本客户端说明
+## 3.sentinel 如何使用
+[如何使用](https://github.com/alibaba/Sentinel/wiki/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8)
+
+## 4.nacos 2.x 版本客户端说明
 首先说一下，如果只是测试sentinel,可以不用连接nacos的，但是我为了全面，还是配置了nacos,但是在连接时报错：【Client not connected,current status:STARTING,StatusRuntimeException】，后确定是因为nacos 2.x 版本后新增了gprc的通信方式，需要新开放2个端口，分别是9848和9849，由于我使用是阿里云服务器，需要去服务中配置即可
 
 
-## 4.模块说明
-1. <b>sentinel-flow</b> : 限流模块测试
-2. <b>sentinel-feign</b> : feign的集成测试
-3. <b>sentinel-gateway</b> : 网关的集成测试
-4. <b>sentinel-nacos-datasource</b> : sentinel配置的持久化
-## 5.参考文档
+## 5.模块说明
+### 5.1 sentinel-flow : 限流模块测试
+### 5.2 sentinel-feign : feign的集成测试
+### 5.3 sentinel-gateway : 网关的集成测试
+### 5.4 sentinel-nacos-datasource : sentinel配置的持久化
+
+
+## 6.参考文档
 1. [参考文档1](https://developer.aliyun.com/article/878296)
 
-## 6.其他
+## 7.其他
 1. 项目开始只有一个父工程，后面我将父工程的代码结构(src)直接复制到了新的模块[sentinel-flow]中，运行主配置类时报错，找不到主配置类，此时可以重新编译一下
 ![img.png](sentinel-flow/src/main/resources/img/img.png)
 
