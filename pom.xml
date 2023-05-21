@@ -4,7 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.qiuguan</groupId>
     <artifactId>nacos-sentinel-demo</artifactId>
+    <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
+
+    <modules>
+        <module>sentinel-flow</module>
+    </modules>
+
     <name>nacos-sentinel-demo</name>
     <description>nacos-sentinel demo</description>
 
@@ -82,31 +88,24 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.qiuguan.cloud.sentinel.NacosSentinelDemoApplication</mainClass>
-                    <skip>true</skip>
+                    <excludes>
+                        <!--排除一些开发工具，减小打包后的体积-->
+                        <!--并且这些开发工具组件引入的时候需要设置为<optional>true</optional>-->
+                        <!--开发工具：spring-boot-devtools、lombok、spring-boot-configuration-processor-->
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                        </exclude>
+                    </excludes>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>repackage</id>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

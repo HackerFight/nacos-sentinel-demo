@@ -1,0 +1,26 @@
+
+server:
+  port: 8085
+  tomcat:
+    threads:
+      min-spare: 10 #最小工线程数，默认是10
+      max: 200 #最大工作线程数,默认是200
+    max-connections: 8192 #接收和处理的最大连接数，默认是8192
+    accept-count: 100 #等待队列中的请求数，默认是100
+
+spring:
+  application:
+    name: nacos-sentinel-flow
+  cloud:
+    nacos:
+      discovery:
+        #该项目主要是测试sentinel,nacos不是必需的
+        server-addr: 47.96.111.179:8848  #nacos 2.x后需要开放出9848和9849两个新端口，不然客户端无法连接服务器，我已经在阿里云服务器开放过了
+    sentinel:
+      eager: true  #默认是懒加载的,只有访问了一次接口才可以在sentinel控制台上显示
+      transport:
+         port: 8719 #默认是8719
+        #dashboard: http://sentinel.hacketown.com  #sentinel dashboard 的服务器地址和端口
+         dashboard: 47.96.111.179:8888
+      log:
+        dir: /Users/qiuguan/logs/sentinel/

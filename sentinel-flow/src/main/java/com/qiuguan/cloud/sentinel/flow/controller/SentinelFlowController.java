@@ -1,6 +1,5 @@
-package com.qiuguan.cloud.sentinel.controller;
+package com.qiuguan.cloud.sentinel.flow.controller;
 
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,9 +11,9 @@ import java.time.format.DateTimeFormatter;
  * @date 2023/05/17 01:34:12  星期三
  */
 @RestController
-public class SentinelController {
+public class SentinelFlowController {
 
-    @GetMapping("/sentinel")
+    @GetMapping("/helloSentinel")
     public String hello(){
         return String.format("hello sentinel, time: %s", DateTimeFormatter.ISO_DATE_TIME.format(LocalDateTime.now()));
     }
