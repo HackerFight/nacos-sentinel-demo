@@ -14,7 +14,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        #该项目主要是测试sentinel,nacos不是必需的
+        #该项目主要是测试sentinel,nacos不是必需的，等后面测试sentinel持久化时才会用到
         server-addr: 47.96.111.179:8848  #nacos 2.x后需要开放出9848和9849两个新端口，不然客户端无法连接服务器，我已经在阿里云服务器开放过了
     sentinel:
       eager: true  #默认是懒加载的,只有访问了一次接口才可以在sentinel控制台上显示

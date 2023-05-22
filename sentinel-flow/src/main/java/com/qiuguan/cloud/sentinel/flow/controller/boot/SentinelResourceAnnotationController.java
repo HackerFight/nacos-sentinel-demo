@@ -40,7 +40,7 @@ import java.util.Collections;
  *
  *
  */
-@RestController
+//加上 @RestController 注解后，服务可以启动，但是在sentinel控制台中不显示当前应用
 public class SentinelResourceAnnotationController implements InitializingBean {
 
     private static final String RESOURCE_NAME = "user";

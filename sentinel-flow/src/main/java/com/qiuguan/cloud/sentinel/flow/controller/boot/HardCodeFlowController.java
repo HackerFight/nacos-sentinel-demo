@@ -2,7 +2,6 @@ package com.qiuguan.cloud.sentinel.flow.controller.boot;
 
 import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.SphU;
-import com.alibaba.csp.sentinel.Tracer;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.slots.block.RuleConstant;
@@ -11,7 +10,6 @@ import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import java.util.Collections;
 
 /**
@@ -36,7 +34,8 @@ import java.util.Collections;
  * @see SentinelResourceAnnotationController
  */
 @Slf4j
-@RestController
+//加上 @RestController 注解后，服务可以启动，但是在sentinel控制台中不显示当前应用
+//@RestController
 public class HardCodeFlowController implements InitializingBean {
 
     //资源名一般就是请求的路径名
