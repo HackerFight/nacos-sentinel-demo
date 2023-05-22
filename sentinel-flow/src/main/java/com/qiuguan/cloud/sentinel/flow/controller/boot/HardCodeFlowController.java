@@ -46,9 +46,7 @@ public class HardCodeFlowController implements InitializingBean {
     @SentinelResource
     @GetMapping("/hello")
     public String hello(){
-        Entry entry = null;
-        try {
-            entry = SphU.entry(RESOURCE_NAME);
+        try(Entry entry = SphU.entry(RESOURCE_NAME)) {
             log.info("welcome to beijing.....");
             return "hello beijing";
         } catch (BlockException e) {
@@ -56,11 +54,7 @@ public class HardCodeFlowController implements InitializingBean {
             return "流控规则生效!!!";
         } catch (Exception e) {
             //如果需要配置降级规则，可以通过这种方式记录业务异常
-            Tracer.traceEntry(e, entry);
-        } finally {
-            if (entry != null) {
-                entry.exit();
-            }
+            //Tracer.traceEntry(e, entry);
         }
 
         return ".....";
