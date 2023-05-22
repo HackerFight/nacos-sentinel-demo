@@ -2,10 +2,18 @@ package com.qiuguan.cloud.sentinel.flow.controller.boot;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.alibaba.csp.sentinel.slots.block.RuleConstant;
+import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
+import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRuleManager;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Collections;
 
 /**
  * @author qiuguan
@@ -33,7 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RestController
-public class SentinelResourceAnnotationController {
+public class SentinelResourceAnnotationController implements InitializingBean {
 
     private static final String RESOURCE_NAME = "user";
 
@@ -72,6 +80,44 @@ public class SentinelResourceAnnotationController {
         return new User("流控对象", 0);
     }
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        //流控规则
+        initFlowRule();
+        //降级规则
+        initDegradeRule();
+    }
+
+
+    public void initFlowRule(){
+        //流控规则
+        FlowRule flowRule = new FlowRule();
+        flowRule.setRefResource(RESOURCE_NAME);
+        flowRule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+        //设置受保护资源的阈值，qps = 1, 超过了这个阈值就要被流控
+        flowRule.setCount(1);
+
+        FlowRuleManager.loadRules(Collections.singletonList(flowRule));
+    }
+
+    public void initDegradeRule(){
+        DegradeRule degradeRule = new DegradeRule();
+        degradeRule.setResource(RESOURCE_NAME);
+        //设置熔断规则：异常数
+        degradeRule.setGrade(RuleConstant.DEGRADE_GRADE_EXCEPTION_COUNT);
+        //触发熔断异常数
+        degradeRule.setCount(2);
+        //触发熔断最小请求数
+        degradeRule.setMinRequestAmount(2);
+        //统计时长：1分钟，默认是1s
+        degradeRule.setStatIntervalMs(1000 * 60);
+        //熔断持续时长，熔断发生后，10s内调用降级的方法，不在调用源方法，10s后再次调用源方法，如果10s后第一次就失败了，直接熔断，继续调用降级方法
+        //10s后：半开状态
+        degradeRule.setTimeWindow(10);
+
+
+        DegradeRuleManager.loadRules(Collections.singletonList(degradeRule));
+    }
 
     @Getter
     @Setter
