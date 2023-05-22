@@ -13,6 +13,12 @@ import java.time.format.DateTimeFormatter;
 @RestController
 public class SentinelFlowController {
 
+    /**
+     * 1.请看 "1-资源.png"  --sentinel 控制台上的 "簇点链路" tab页上选择，也就是资源
+     * 2.请看 "2-配置流控规则.png"
+     * 3.请看 "3-默认的限流.png"
+     * @return
+     */
     @GetMapping("/helloSentinel")
     public String hello(){
         return String.format("hello sentinel, time: %s", DateTimeFormatter.ISO_DATE_TIME.format(LocalDateTime.now()));
