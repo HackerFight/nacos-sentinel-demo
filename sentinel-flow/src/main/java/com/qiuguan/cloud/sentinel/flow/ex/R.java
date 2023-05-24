@@ -17,8 +17,8 @@ public class R<T> {
 
     private T data;
 
-    public static R error(int code, String msg) {
-        return new R(code, msg);
+    public static R<?> error(int code, String msg) {
+        return new R<>(code, msg);
     }
 
     public R(int code, String msg) {

@@ -39,7 +39,7 @@ public class SentinelBlockExceptionHandler implements BlockExceptionHandler {
         //e.getRule(): 资源，规则的详细信息
         log.info("自定义BlockExceptionHandler处理BlockException异常，rule = {}", e.getRule());
 
-        R r = null;
+        R<?> r = null;
         if (e instanceof FlowException) {
             r = R.error(100, "接口限流了....");
         } else if (e instanceof DegradeException) {
