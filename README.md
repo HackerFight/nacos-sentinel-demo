@@ -20,6 +20,7 @@
 #### 5.1.2 <font color="red">关联流控模式</font>
 1. 请看 `SentinelFlowCorrelationPatternController`
 2. 请看 配置细节<br>![配置图片](sentinel-flow/src/main/resources/关联/关联资源限流.png)
+> 注意：关联资源那里应该是步骤2
 3. 如何测试？需要借助jmeter <br>
   <b><font color="green">i: 定义线程组</font></b> <br>
  ![线程组](sentinel-flow/src/main/resources/关联/1-定义线程组.png) <br>
