@@ -28,7 +28,7 @@
    <b><font color="green">iii: 定义线程组</font></b>
  ![结果树](sentinel-flow/src/main/resources/关联/3-定义结果树.png)
    <b><font color="green">iiii: 通过浏览器访问订单查询接口</font></b>
-  > http://localhost:8085/get 可以看到被限流了。
+  > http://localhost:8085/get 可以看到被限流了。<br>
   ![限流](sentinel-flow/src/main/resources/关联/4-限流.png)
 
 #### 5.1.3 <font color="red">链路流控模式</font>
