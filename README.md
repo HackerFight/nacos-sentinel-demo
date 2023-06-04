@@ -13,6 +13,26 @@
 
 ## 5.模块说明
 ### 5.1 sentinel-flow : 限流模块测试
+#### 5.1.1 <font color="red">简单流控模式</font>
+1. 请看 `SentinelFlowQPSController` 和 `SentinelFlowThreadController`
+> 其中 '阈值类型=线程并发数' 的可以将值配置的小一点，然后开启两个浏览器窗口(无痕)进行测试
+2. 请看 /resources/sentinel-img/目录下的图片看下，比较容易理解
+#### 5.1.2 <font color="red">关联流控模式</font>
+1. 请看 `SentinelFlowCorrelationPatternController`
+2. 请看 配置细节![配置图片](sentinel-flow/src/main/resources/关联/关联资源限流.png)
+3. 如何测试？需要借助jmeter <br>
+  <b><font color="green">i: 定义线程组</font></b>
+ ![线程组](sentinel-flow/src/main/resources/关联/1-定义线程组.png)
+   <b><font color="green">ii: 定义线程组</font></b>
+ ![http请求](sentinel-flow/src/main/resources/关联/2-定义http请求.png)
+   <b><font color="green">iii: 定义线程组</font></b>
+ ![结果树](sentinel-flow/src/main/resources/关联/3-定义结果树.png)
+   <b><font color="green">iiii: 通过浏览器访问订单查询接口</font></b>
+  > http://localhost:8085/get 可以看到被限流了。
+  ![限流](sentinel-flow/src/main/resources/关联/4-限流.png)
+
+#### 5.1.3 <font color="red">链路流控模式</font>
+
 ### 5.2 sentinel-feign : feign的集成测试
 ### 5.3 sentinel-gateway : 网关的集成测试
 ### 5.4 sentinel-nacos-datasource : sentinel配置的持久化
@@ -23,8 +43,8 @@
 
 ## 7.其他
 1. 项目开始只有一个父工程，后面我将父工程的代码结构(src)直接复制到了新的模块[sentinel-flow]中，运行主配置类时报错，找不到主配置类，此时可以重新编译一下
-![img.png](sentinel-flow/src/main/resources/img/img.png)
+![img.png](sentinel-flow/src/main/resources/img/sentinel%20局域网限制.png)
 
 2. sentinel不显示资源 <br>
-如图![](sentinel-flow/src/main/resources/img/img_1.png)
+如图![](sentinel-flow/src/main/resources/img/maven%20编译.png)
 请求接口后无法看到实时监控，关闭懒加载后也一样看不到，添加了相关注解也无法看到，原来是因为我的请求资源(Controller)和sentinel控制台不在同一个网络中，sentinel控制台我是部署到了阿里云服务器上，资源是本地的springboot, 只需要将二者部署在同一个网络中即可。

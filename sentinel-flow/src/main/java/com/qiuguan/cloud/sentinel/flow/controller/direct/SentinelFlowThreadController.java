@@ -1,4 +1,4 @@
-package com.qiuguan.cloud.sentinel.flow.controller;
+package com.qiuguan.cloud.sentinel.flow.controller.direct;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
