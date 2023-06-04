@@ -21,12 +21,12 @@
 1. 请看 `SentinelFlowCorrelationPatternController`
 2. 请看 配置细节<br>![配置图片](sentinel-flow/src/main/resources/关联/关联资源限流.png)
 3. 如何测试？需要借助jmeter <br>
-  <b><font color="green">i: 定义线程组</font></b>
- ![线程组](sentinel-flow/src/main/resources/关联/1-定义线程组.png)
-   <b><font color="green">ii: 定义线程组</font></b>
- ![http请求](sentinel-flow/src/main/resources/关联/2-定义http请求.png)
-   <b><font color="green">iii: 定义线程组</font></b>
- ![结果树](sentinel-flow/src/main/resources/关联/3-定义结果树.png)
+  <b><font color="green">i: 定义线程组</font></b> <br>
+ ![线程组](sentinel-flow/src/main/resources/关联/1-定义线程组.png) <br>
+   <b><font color="green">ii: 定义线程组</font></b> <br>
+ ![http请求](sentinel-flow/src/main/resources/关联/2-定义http请求.png) <br>
+   <b><font color="green">iii: 定义线程组</font></b> <br>
+ ![结果树](sentinel-flow/src/main/resources/关联/3-定义结果树.png) <br>
    <b><font color="green">iiii: 通过浏览器访问订单查询接口</font></b>
   > http://localhost:8085/get 可以看到被限流了。<br>
   ![限流](sentinel-flow/src/main/resources/关联/4-限流.png)
