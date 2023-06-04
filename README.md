@@ -42,9 +42,9 @@
 1. [参考文档1](https://developer.aliyun.com/article/878296)
 
 ## 7.其他
-1. 项目开始只有一个父工程，后面我将父工程的代码结构(src)直接复制到了新的模块[sentinel-flow]中，运行主配置类时报错，找不到主配置类，此时可以重新编译一下
-![img.png](sentinel-flow/src/main/resources/img/sentinel%20局域网限制.png)
+1. 项目开始只有一个父工程，后面我将父工程的代码结构(src)直接复制到了新的模块[sentinel-flow]中，运行主配置类时报错，找不到主配置类，此时可以重新编译一下 <br>
+![img.png](sentinel-flow/src/main/resources/img/maven%20编译.png)
 
 2. sentinel不显示资源 <br>
-如图![](sentinel-flow/src/main/resources/img/maven%20编译.png)
+![sentinel资源show](sentinel-flow/src/main/resources/img/sentinel%20局域网限制.png)
 请求接口后无法看到实时监控，关闭懒加载后也一样看不到，添加了相关注解也无法看到，原来是因为我的请求资源(Controller)和sentinel控制台不在同一个网络中，sentinel控制台我是部署到了阿里云服务器上，资源是本地的springboot, 只需要将二者部署在同一个网络中即可。
