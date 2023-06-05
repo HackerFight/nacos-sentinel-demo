@@ -1,4 +1,4 @@
-package com.qiuguan.cloud.sentinel.flow.controller.correlation;
+package com.qiuguan.cloud.sentinel.flow.pattern.controller.correlation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

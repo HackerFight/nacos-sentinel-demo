@@ -1,4 +1,4 @@
-package com.qiuguan.cloud.sentinel.flow.controller.direct;
+package com.qiuguan.cloud.sentinel.flow.pattern.controller.direct;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;

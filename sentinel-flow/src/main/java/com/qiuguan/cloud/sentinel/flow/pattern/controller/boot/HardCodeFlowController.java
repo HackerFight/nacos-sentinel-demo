@@ -1,4 +1,4 @@
-package com.qiuguan.cloud.sentinel.flow.controller.boot;
+package com.qiuguan.cloud.sentinel.flow.pattern.controller.boot;
 
 import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.SphU;

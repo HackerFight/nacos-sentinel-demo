@@ -1,4 +1,4 @@
-package com.qiuguan.cloud.sentinel.flow.controller.boot;
+package com.qiuguan.cloud.sentinel.flow.pattern.controller.boot;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
@@ -11,7 +11,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 
