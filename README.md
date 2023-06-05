@@ -1,23 +1,24 @@
-## 1.关于版本选择
+# 1.关于版本选择
 关于SpringBoot, Spring Cloud, Spring Cloud Alibaba 三者版本的选择可以参考[官方文档](https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E) 或者使用[脚手架](https://start.aliyun.com/) 来构建项目，这样可以避免版本冲突。
 
-## 2. sentinel 控制台
+# 2. sentinel 控制台
 [参考官方文档说明](https://sentinelguard.io/zh-cn/docs/dashboard.html)
 
-## 3.sentinel 如何使用
+# 3.sentinel 如何使用
 [如何使用](https://github.com/alibaba/Sentinel/wiki/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8)
 
-## 4.nacos 2.x 版本客户端说明
+# 4.nacos 2.x 版本客户端说明
 首先说一下，如果只是测试sentinel,可以不用连接nacos的，但是我为了全面，还是配置了nacos,但是在连接时报错：【Client not connected,current status:STARTING,StatusRuntimeException】，后确定是因为nacos 2.x 版本后新增了gprc的通信方式，需要新开放2个端口，分别是9848和9849，由于我使用是阿里云服务器，需要去服务中配置即可
 
 
-## 5.模块说明
-### 5.1 sentinel-flow : 限流模块测试
-#### 5.1.1 <font color="red">简单流控模式</font>
+# 5.模块说明
+## 5.1 sentinel-flow : 限流模块测试
+### 5.1.1 <font color="red">流控模式</font>
+#### 5.1.1.1 简单流控模式
 1. 请看 `SentinelFlowQPSController` 和 `SentinelFlowThreadController`
 > 其中 '阈值类型=线程并发数' 的可以将值配置的小一点，然后开启两个浏览器窗口(无痕)进行测试
 2. 请看 /resources/sentinel-img/目录下的图片看下，比较容易理解
-#### 5.1.2 <font color="red">关联流控模式</font>
+#### 5.1.1.2 关联流控模式
 1. 请看 `SentinelFlowCorrelationPatternController`
 2. 请看 配置细节<br>![配置图片](sentinel-flow/src/main/resources/关联/关联资源限流.png)
 > 注意：关联资源那里应该是步骤2
@@ -32,7 +33,7 @@
   > http://localhost:8085/get 可以看到被限流了。<br>
   ![限流](sentinel-flow/src/main/resources/关联/4-限流.png)
 
-#### 5.1.3 <font color="red">链路流控模式</font>
+#### 5.1.1.3 链路流控模式
 1. 请看 `SentinelFlowLinkPatternController`类，重点看下注释
 2. 资源关系网说明：
 > 下面记录了资源之间的调用链路，这些资源通过调用关系，相互之间构成一颗调用树，这颗树的根节点是名为getUser的节点，调用链的入口都是他的子节点 <br>
@@ -86,16 +87,43 @@ spring:
    | 关联模式 | 统计与当前资源相关的另一个资源，触发阀值时，对当前资源限流 | 比如用户支付时需要修改订单状态，同时用户要查询订单。查询和修改操作会争抢数据库锁，产生竞争。业务需求是有限支付和更新订单的业务，因此当修改订单业务触发國值时，需要对查询订单业务限流。                    |
    | 链路模式    | 只针对从指定链路访问到本资源的请求做统计，判断是否超过阈值 | 列如有两条请求链路：<br>/order/test1---→getUser<br>/order/test2---→getUser<br>如果只希望统计从/order/test2进入到getUser的请求，则可以这样按我上面的配置
 
+### 5.1.2 <font color="red">流控效果</font>
+#### 5.1.2.1 快速失败
+[<b>直接拒绝<b>（RuleConstant.CONTROL_BEHAVIOR_DEFAULT）方式是默认的流量控制方式，当QPS超过任意规则的阈值后，新的请求就会被立即拒绝，拒绝方式为抛出FlowException。这种方式适用于对系统处理能力确切已知的情况下，比如通过压测确定了系统的准确水位时](https://github.com/alibaba/Sentinel/wiki/%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6#%E7%9B%B4%E6%8E%A5%E6%8B%92%E7%BB%9D)
+> 前面测试流控模式时，默认的流控效果就是快速失败。
 
-### 5.2 sentinel-feign : feign的集成测试
-### 5.3 sentinel-gateway : 网关的集成测试
-### 5.4 sentinel-nacos-datasource : sentinel配置的持久化
+#### 5.1.2.2 Warm Up
+[Warm Up（RuleConstant.CONTROL_BEHAVIOR_WARM_UP）方式，即预热/冷启动方式。当系统长期处于低水位的情况下，当流量突然增加时，直接把系统拉升到高水位可能瞬间把系统压垮。通过"冷启动"，让通过的流量缓慢增加，在一定时间内逐渐增加到阈值上限，给冷系统一个预热的时间，避免冷系统被压垮](https://github.com/alibaba/Sentinel/wiki/%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6#warm-up)
+> 比如某些商品平时购买量很少，但是大促活动开始，购买量激增，要避免这种瞬时流量把系统打垮
 
 
-## 6.参考文档
+ `冷加载因子，codeFactor = 3, 即请求QPS从 threshold/3开始，经过预热时长逐渐升至设定的QPS阈值`
+
+1. 请看 `WarmUpController` 类
+2. sentinel配置预热参数 <br>
+![warmup](sentinel-flow/src/main/resources/流控效果/warmup/1-warmup参数设置.png)
+> 效果应该是从 15 / 3 = 5 开始在5s内达到阈值
+
+3. 效果演示，浏览器不明显，还是用jmeter测试 <br>
+    1) 定义线程组 <br>
+   ![定义线程组](sentinel-flow/src/main/resources/流控效果/warmup/4-定义线程组.png)
+    2) 定义http请求 <br>
+   ![定义请求](sentinel-flow/src/main/resources/流控效果/warmup/5-定义http请求.png)
+    3) 观察sentinel控制台的实时监控
+   ![实时监控1](sentinel-flow/src/main/resources/流控效果/warmup/2-实时监控.png) <br>
+   ![实时监控2](sentinel-flow/src/main/resources/流控效果/warmup/3-实时监控.png)
+
+
+## 5.2 sentinel-feign : feign的集成测试
+## 5.3 sentinel-gateway : 网关的集成测试
+## 5.4 sentinel-nacos-datasource : sentinel配置的持久化
+
+
+
+# 6.参考文档
 1. [参考文档1](https://developer.aliyun.com/article/878296)
 
-## 7.其他
+# 7.其他
 1. 项目开始只有一个父工程，后面我将父工程的代码结构(src)直接复制到了新的模块[sentinel-flow]中，运行主配置类时报错，找不到主配置类，此时可以重新编译一下 <br>
 ![img.png](sentinel-flow/src/main/resources/img/maven%20编译.png)
 
