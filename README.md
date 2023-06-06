@@ -94,6 +94,7 @@ spring:
 
 #### 5.1.2.2 Warm Up
 [Warm Up（RuleConstant.CONTROL_BEHAVIOR_WARM_UP）方式，即预热/冷启动方式。当系统长期处于低水位的情况下，当流量突然增加时，直接把系统拉升到高水位可能瞬间把系统压垮。通过"冷启动"，让通过的流量缓慢增加，在一定时间内逐渐增加到阈值上限，给冷系统一个预热的时间，避免冷系统被压垮](https://github.com/alibaba/Sentinel/wiki/%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6#warm-up)
+* [参考官网](https://github.com/alibaba/Sentinel/wiki/%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6)
 > 比如某些商品平时购买量很少，但是大促活动开始，购买量激增，要避免这种瞬时流量把系统打垮
 
 
@@ -114,6 +115,35 @@ spring:
    ![实时监控2](sentinel-flow/src/main/resources/流控效果/warmup/3-实时监控.png)
 
 
+#### 5.1.2.3 匀速排队
+匀速排队（RuleConstant.CONTROL_BEHAVIOR_RATE_LIMITER）方式会严格控制请求通过的间隔时间，也即是让请求以均匀的速度通过，对应的是漏桶算法。[参考官方](https://github.com/alibaba/Sentinel/wiki/%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6#%E5%8C%80%E9%80%9F%E6%8E%92%E9%98%9F)
+
+* WarmUp： 激增流量
+* 匀速排队：脉冲流量
+
+1. 请看 `QueueUpController`
+2. 体验脉冲流量
+   1) 借助jmeter <br>
+   ![定义线程组](sentinel-flow/src/main/resources/流控效果/queue/1-定义线程组.png)<br>
+   ![定义定时器](sentinel-flow/src/main/resources/流控效果/queue/2-定义定时器.png) <br>
+   ![定义请求](sentinel-flow/src/main/resources/流控效果/queue/3-定义http请求.png) <br>
+   
+   2) sentinel实时监控大盘 <br>
+   ![定义请求](sentinel-flow/src/main/resources/流控效果/queue/4-实时监控.png) <br>
+   ![定义请求](sentinel-flow/src/main/resources/流控效果/queue/5-实时监控.png) <br>
+
+> 就是一会有流量，一会又空闲，一会又有流量
+
+针对这种情况，如果我们使用快速失败来看下效果，还是以 `QueueUpController` 为例，我们在sentinel控制台配置QPS=5, 然后流控效果是快速失败，使用上面的jmeter配置进行测试：<br>
+![定义请求](sentinel-flow/src/main/resources/流控效果/queue/6-快速失败例子.png) <br>
+很明显就是一部分失败，一部分成功，现在我们用 <b>快速排队</b> 来看下：<br>
+![定义请求](sentinel-flow/src/main/resources/流控效果/queue/7-排队等待参数配置.png) <br>
+
+接下来在使用上面的jmeter配置进行测试: <br>
+![定义请求](sentinel-flow/src/main/resources/流控效果/queue/8-排队等待.png) <br>
+
+从结果上看，没有失败的线程了，全部都被处理了，这样充分利用了服务器的空闲时间，还减少了瞬时流量对服务器的冲击，简直是一举两得。
+
 ## 5.2 sentinel-feign : feign的集成测试
 ## 5.3 sentinel-gateway : 网关的集成测试
 ## 5.4 sentinel-nacos-datasource : sentinel配置的持久化
@@ -130,3 +160,4 @@ spring:
 2. sentinel不显示资源 <br>
 ![sentinel资源show](sentinel-flow/src/main/resources/img/sentinel%20局域网限制.png)
 请求接口后无法看到实时监控，关闭懒加载后也一样看不到，添加了相关注解也无法看到，原来是因为我的请求资源(Controller)和sentinel控制台不在同一个网络中，sentinel控制台我是部署到了阿里云服务器上，资源是本地的springboot, 只需要将二者部署在同一个网络中即可。
+
