@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class OpenFeignApplication {
+public class OpenFeignConfigApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(OpenFeignApplication.class, args);
+        SpringApplication.run(OpenFeignConfigApplication.class, args);
     }
 }

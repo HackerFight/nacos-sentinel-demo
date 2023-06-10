@@ -12,6 +12,7 @@
         <module>sentinel-feign</module>
         <module>sentinel-gateway</module>
         <module>sentinel-nacos-datasource</module>
+        <module>sentinel-fallback-mock-server</module>
     </modules>
 
     <name>nacos-sentinel-demo</name>
@@ -92,11 +93,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>5.8.11</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>cn.hutool</groupId>-->
+        <!--            <artifactId>hutool-all</artifactId>-->
+        <!--            <version>5.7.11</version>-->
+        <!--        </dependency>-->
 
     </dependencies>
 
@@ -132,5 +133,18 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://maven.aliyun.com/repository/central</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
 </project>
