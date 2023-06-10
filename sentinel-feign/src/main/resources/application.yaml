@@ -1,0 +1,13 @@
+server:
+  port: 8006
+
+
+spring:
+  application:
+    name: sentinel-feign-app
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
+

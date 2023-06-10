@@ -10,11 +10,11 @@ import java.util.concurrent.TimeUnit;
  * @author qiuguan
  * @date 2023/06/10 00:02:07  星期六
  *
- * 慢调用控制器
+ * 慢调用比例
  */
 @Slf4j
 @RestController
-public class SlowCallController {
+public class SlowCallRatioController {
 
     @GetMapping("/slow")
     public String slowCall() throws InterruptedException {
