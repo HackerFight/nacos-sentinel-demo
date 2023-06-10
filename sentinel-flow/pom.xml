@@ -16,4 +16,17 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+    <dependencies>
+        <!--
+             排除nacos, 因为我的主pom中导入了nacos依赖，所以sentinel-feign直接就继承了，
+             但是我这里测试是sentinel,和nacos关系不大（持久化会用到），所以我这里把它排除掉
+             通过作用域来修改。或者请看 OpenFeignApplication配置类
+           -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
 </project>
