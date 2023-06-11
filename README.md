@@ -218,11 +218,12 @@ spring:
 请看 `com.qiuguan.cloud.sentinel.openfeign` 下面的代码
 
 2. sentinel控制台配置feign的降级
-> 以 `Order2FeignClient` 为例进行配置
+> 以 `Order2FeignClient` 为例进行配置 <br>
+
 ![feign的配置](sentinel-openfeign/src/main/resources/img/feign的集成/1-feign的配置.png) <br>
 注意：配置的时候要选择 "feign" 标注的请求路径，作为熔断降级的资源，不是我们的Controller入口（createOrder)。
 
-3. 配置规则
+3. 配置规则 <br>
 ![配置规则](sentinel-openfeign/src/main/resources/img/feign的集成/2-降级规则.png) <br>
 快速访问两次都失败了，第三次从页面上看到的就是我们指定的降级规则了。
 
@@ -231,7 +232,33 @@ spring:
 ## 5.3 sentinel-gateway : 网关的集成测试
 ## 5.4 sentinel-nacos-datasource : sentinel配置的持久化
 
+## 5.5 sentinel-hotparam : 热点参数流控
+<h3>何为热点:</h3>
+就是访问评率比较高的数据，比如商品大促时，有些商品买的火，有些买的一般，那么我们就可以针对卖的特别火的商品进行流控。
 
+常用场景：
+ * 热点商品访问控制
+ * 用户/IP 防刷
+
+实现原理：
+* 热点淘汰策略(LRU) + Token Bucket 流控 <br><br>
+
+1. 请看 `HotParamController` <br>
+![0](sentinel-hotparam/src/main/resources/img/4-参数详情.png) <br>
+2. 参数配置规则<br>
+![1](sentinel-hotparam/src/main/resources/img/1-热点参数.png) <br>
+3. 配置细节 <br>
+![2](sentinel-hotparam/src/main/resources/img/2-热点参数设置0.png) <br>
+4. 配置完成后，就可以测试了，快速访问2次，然后第三次就会流控了。
+
+5. 多个参数配置 <br>
+![3](sentinel-hotparam/src/main/resources/img/3-配置多个参数.png) <br>
+> 针对第一个参数和第三个参数配置
+
+6. 配置额外参数(根据参数值就行流控) <br>
+随便找一个热点参数，然后编辑<br>
+![5](sentinel-hotparam/src/main/resources/img/5-针对值进行限流.png) <br>
+> 这样访问 http://localhost:9904/get/555 的时候，快速访问2次就被流控了，而其他参数值QPS要达到100才流控。
 
 # 6.参考文档
 1. [参考文档1](https://developer.aliyun.com/article/878296)

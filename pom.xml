@@ -13,6 +13,7 @@
         <module>sentinel-nacos-datasource</module>
         <module>sentinel-fallback-mock-server</module>
         <module>sentinel-openfeign</module>
+        <module>sentinel-hotparam</module>
     </modules>
 
     <name>nacos-sentinel-demo</name>
