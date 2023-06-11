@@ -199,6 +199,35 @@ spring:
 ![异常数](sentinel-openfeign/src/main/resources/img/异常数/1-异常数.png)
 > 这个相对简单，浏览器快速访问2次，第3次请求会进入熔断，等待10s再次请求，响应失败，然后在请求会立即进入熔断。
 
+
+### 5.2.2 openfeign集成
+1. 集成openfeign
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-openfeign</artifactId>
+    <version>3.1.5</version>
+</dependency>
+
+<dependency>
+    <groupId>com.alibaba.cloud</groupId>
+    <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+</dependency>
+```
+<br>
+请看 `com.qiuguan.cloud.sentinel.openfeign` 下面的代码
+
+2. sentinel控制台配置feign的降级
+> 以 `Order2FeignClient` 为例进行配置
+![feign的配置](sentinel-openfeign/src/main/resources/img/feign的集成/1-feign的配置.png) <br>
+注意：配置的时候要选择 "feign" 标注的请求路径，作为熔断降级的资源，不是我们的Controller入口（createOrder)。
+
+3. 配置规则
+![配置规则](sentinel-openfeign/src/main/resources/img/feign的集成/2-降级规则.png) <br>
+快速访问两次都失败了，第三次从页面上看到的就是我们指定的降级规则了。
+
+
+
 ## 5.3 sentinel-gateway : 网关的集成测试
 ## 5.4 sentinel-nacos-datasource : sentinel配置的持久化
 

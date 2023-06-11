@@ -3,8 +3,10 @@ package com.qiuguan.cloud.sentinel;
 import com.alibaba.cloud.nacos.discovery.NacosDiscoveryAutoConfiguration;
 import com.alibaba.cloud.nacos.discovery.NacosDiscoveryClientConfiguration;
 import com.alibaba.cloud.nacos.registry.NacosServiceRegistryAutoConfiguration;
+import com.qiuguan.cloud.sentinel.openfeign.config.OpenFeignConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author qiuguan
@@ -14,7 +16,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 但是我这里可以不使用nacos(当然使用也没有问题),所以排除掉nacos的配置类
  * 还有一种方式，请看sentinel-flow的pom.xml
  */
-
+@EnableFeignClients(
+        basePackages = "com.qiuguan.cloud.sentinel.openfeign.client",
+        defaultConfiguration = OpenFeignConfig.class
+)
 @SpringBootApplication(exclude = {
         NacosDiscoveryAutoConfiguration.class,
         NacosDiscoveryClientConfiguration.class,

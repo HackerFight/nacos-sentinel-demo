@@ -22,8 +22,15 @@ public class StockController {
      * @return
      */
     @GetMapping("/reduce")
-    public String getOrder(){
+    public String reduceStock(){
        log.info("扣款库存成功.....");
        return "库存扣减成功";
+    }
+
+    @GetMapping("/reduce2")
+    public String reduceStock2(){
+        //客户端调用这个接口时，出现异常，客户端会自己服务降级
+        int x = 1 / 0;
+        return "库存扣减成功";
     }
 }
