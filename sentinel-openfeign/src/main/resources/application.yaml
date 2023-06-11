@@ -1,12 +1,12 @@
 server:
-  port: 8006
+  port: 9002
 
 
 spring:
   application:
-    name: sentinel-feign-app
+    name: sentinel-openfeign
   cloud:
     sentinel:
       transport:
         dashboard: localhost:8080
-        port: 8719
+        port: 8719 #默认就是8719

@@ -145,10 +145,10 @@ spring:
 从结果上看，没有失败的线程了，全部都被处理了，这样充分利用了服务器的空闲时间，还减少了瞬时流量对服务器的冲击，简直是一举两得。
 
 
-## 5.2 sentinel-feign : feign的集成测试
+## 5.2 sentinel-openfeign : feign的集成测试
 [降级规则参考官网](https://github.com/alibaba/Sentinel/wiki/%E7%86%94%E6%96%AD%E9%99%8D%E7%BA%A7) <br>
 除了流量控制以外，对链路调用中不稳定的资源进行熔断降级也是保障高可用的重要措施之一。我们需要对不稳定的"弱依赖服务调用"进行熔断降级，暂时切断不稳定调用，避免局部不稳定的因素导致整体的雪崩。熔断降级作为保护自身的手段，通常在客户端（调用端)进行配置。（限流一般都是在服务端（接口的提供端）进行配置)<br>
-![弱依赖](sentinel-feign/src/main/resources/img/慢调用比例/1-弱依赖.png) <br>
+![弱依赖](sentinel-openfeign/src/main/resources/img/慢调用比例/1-弱依赖.png) <br>
 比如，积分系统在整个秒杀系统中是微不足道的，是弱依赖的，它down掉后面可以后续进行补偿，不会影响从商品下单，到支付，到扣库存，到发货的核心流程。
 > 核心系统down掉，整个链路就失败好了，比如下单中支付模块失败了，那就直接失败就行了
 
@@ -174,29 +174,29 @@ spring:
 #### 5.2.1.1 慢调用比例
 1. 参考 `SlowCallRatioController`, 接口的响应时间为2s
 2. 配置慢调用比例降级规则 <br>
-![慢调用比例](sentinel-feign/src/main/resources/img/慢调用比例/2-慢调用比例.png) </br>
+![慢调用比例](sentinel-openfeign/src/main/resources/img/慢调用比例/2-慢调用比例.png) </br>
 > 1.最大RT, 最大响应时间，就是最长时间返回的接口才算慢调用。我这里配置1.5s，我接口的响应时间为2s,所以它本身是慢调用。<br>
 > 2.统计时长，比例阈值，最少请求数：就是在统计时长内，最少多少个请求内达到了慢调用比例，才会触发熔断 <br>
 > 3.熔断时长：就是触发熔断后，在10s内都是断开的，10s钟后，进入"半开"状态，如果这中间有一个请求进来发现是慢调用，则立即进入熔断状态，不会在看其他参数配置。<br>
 
 3. 根据上面配置的降级规则，我们利用jmeter来测试看下：
-![配置线程组](sentinel-feign/src/main/resources/img/慢调用比例/3-配置线程组.png) <br>
+![配置线程组](sentinel-openfeign/src/main/resources/img/慢调用比例/3-配置线程组.png) <br>
 ![配置http请求](sentinel-feign/src/main/resources/img/慢调用比例/4-配置http.png) <br>
 
 此时jmeter发起测试完毕后，我们通过浏览器再去访问 http://localhost:8006/slow 就会发现，提示"服务降级了"。此时我们可以等待10s在请求，发现请求完一次后，再次请求会立马进入"熔断"。<br>
-![服务降级了](sentinel-feign/src/main/resources/img/慢调用比例/5-服务降级了.png)
+![服务降级了](sentinel-openfeign/src/main/resources/img/慢调用比例/5-服务降级了.png)
 
 
 #### 5.2.1.2 异常比例
 1. 请看 `ExceptionRatioController`
 2. 配置异常比例参数 <br>
-![异常比例](sentinel-feign/src/main/resources/img/异常比例/1-异常比例.png)
+![异常比例](sentinel-openfeign/src/main/resources/img/异常比例/1-异常比例.png)
 3. 然后简单配置一下jmeter, 调用完成后，浏览器访问发现降级了，然后等10s在访问一次，会异常，然后在访问就继续熔断。
 
 #### 5.2.1.3 异常数
 1. 请看 `ExceptionCountController`
 2. 配置异常数参数<br>
-![异常数](sentinel-feign/src/main/resources/img/异常数/1-异常数.png)
+![异常数](sentinel-openfeign/src/main/resources/img/异常数/1-异常数.png)
 > 这个相对简单，浏览器快速访问2次，第3次请求会进入熔断，等待10s再次请求，响应失败，然后在请求会立即进入熔断。
 
 ## 5.3 sentinel-gateway : 网关的集成测试

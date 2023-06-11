@@ -1,4 +1,4 @@
-package com.qiuguan.cloud.sentinel.openfeign.ex;
+package com.qiuguan.cloud.sentinel.rule.ex;
 
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.slots.block.BlockException;

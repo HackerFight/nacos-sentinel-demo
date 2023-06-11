@@ -1,4 +1,4 @@
-package com.qiuguan.cloud.sentinel.openfeign.ex;
+package com.qiuguan.cloud.sentinel.rule.ex;
 
 import lombok.Getter;
 import lombok.Setter;

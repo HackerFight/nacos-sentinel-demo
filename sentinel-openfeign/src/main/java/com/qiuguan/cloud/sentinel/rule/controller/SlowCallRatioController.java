@@ -1,4 +1,4 @@
-package com.qiuguan.cloud.sentinel.openfeign.controller;
+package com.qiuguan.cloud.sentinel.rule.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
