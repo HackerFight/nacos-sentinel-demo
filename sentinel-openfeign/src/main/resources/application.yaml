@@ -10,3 +10,8 @@ spring:
       transport:
         dashboard: localhost:8080
         port: 8719 #默认就是8719
+
+#开启 sentinel 整合 openfeign
+feign:
+  sentinel:
+    enabled: true

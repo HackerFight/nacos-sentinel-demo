@@ -3,6 +3,7 @@ package com.qiuguan.sentinel.mock.controller;
 import com.alibaba.fastjson.JSON;
 import lombok.Builder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * mock 服务，给 sentinel-openfeign 客户端调用的
  */
+@RequestMapping("/order")
 @RestController
 public class MockServerController {
 
@@ -26,7 +28,7 @@ public class MockServerController {
     }
 
     @Builder
-    private static class Order {
+    static class Order {
 
         private String orderId;
 
