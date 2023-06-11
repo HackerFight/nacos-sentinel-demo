@@ -8,9 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2023/06/10 23:13:49  星期六
  */
 @SpringBootApplication
-public class MockServerApplication {
+public class StockApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MockServerApplication.class, args);
+        SpringApplication.run(StockApplication.class, args);
     }
 }
