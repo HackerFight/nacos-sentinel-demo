@@ -1,6 +1,5 @@
 package com.qiuguan.cloud.sentinel.openfeign.client;
 
-import com.qiuguan.cloud.sentinel.openfeign.fallback.StockReduceFallback;
 import com.qiuguan.cloud.sentinel.openfeign.fallback.StockReduceFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
